@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node-dev server",
-    "frontend": "webpack --progress --colors --watch"
+    "frontend": "webpack --progress --colors --watch",
+    "start": "node server"
   },
   "author": "Niklas Närhinen",
   "license": "MIT",
