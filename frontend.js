@@ -17,7 +17,7 @@ var App = React.createClass({
         <Navbar brand='Sarjakilpailutilanteet' inverse toggleNavKey={0} staticTop>
           <Nav right eventKey={0}>
             <DropdownButton eventKey={1} title='Kilpailut'>
-              <MenuItem onSelect={this.onMenuSelect} eventKey='/amatoorisarja'>Amatöörisarja</MenuItem>
+              {Object.keys(routesNames).map((name) => <MenuItem onSelect={this.onMenuSelect} eventKey={'/' + name} key={name}>{routesNames[name]}</MenuItem>)}
             </DropdownButton>
             <MenuItem onSelect={this.onMenuSelect} eventKey='/tietoja'>Info</MenuItem>
           </Nav>
@@ -65,14 +65,29 @@ var ResultDetails = React.createClass({
   }
 });
 
-var Amatoorisarja = React.createClass({
-  componentDidMount() {
-    axios.get('/data/amatoorisarja').then((resp) => {
+var routesNames = {
+  'amatoorisarja': 'Amatöörisarja',
+  'junioricup': 'Animagi junioricup'
+};
+
+var Series = React.createClass({
+  update(props) {
+    this.setState({
+      loading: true,
+      data: null
+    });
+    axios.get('/data/' + props.params.path).then((resp) => {
       this.setState({
         data: resp.data,
         loading: false
       });
     }).catch(() => this.setState({error: true }));
+  },
+  componentWillReceiveProps(newProps) {
+    this.update(newProps);
+  },
+  componentDidMount() {
+    this.update(this.props);
   },
   getInitialState() {
     return {
@@ -91,7 +106,7 @@ var Amatoorisarja = React.createClass({
     if (this.state.loading) return <Well>Ladataan tietoja..</Well>;
     return (
       <div>
-        <h2>Amatöörisarja</h2>
+        <h2>{routesNames[this.props.params.path]}</h2>
         <Table responsive>
           <thead>
             <tr>
@@ -134,10 +149,27 @@ var Tietoja = React.createClass({
 });
 
 
+var Front = React.createClass({
+  render() {
+    return (
+      <div>
+        <h2>SRL:n sarjakilpailujen tilanne</h2>
+        <p>Epävirallinen ajantasainen listaus sarjakilpailujen pistetilanteista. <Link to="tietoja">Lue lisää</Link></p>
+        <ul>
+          {Object.keys(routesNames).map((name) => {
+            return <li><Link to="series" params={{path: name}}>{routesNames[name]}</Link></li>;
+          })}
+        </ul>
+      </div>
+    );
+  }
+})
+
 var routes = (
   <Route handler={App}>
-    <Route handler={Amatoorisarja} path="/amatoorisarja" />
-    <Route handler={Tietoja} path="/tietoja" />
+    <Route handler={Front} path="/" />
+    <Route handler={Tietoja} path="/tietoja" name="tietoja"/>
+    <Route handler={Series} path=":path" name="series" />
   </Route>
 );
 

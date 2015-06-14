@@ -70,6 +70,8 @@
 	    this.transitionTo(key);
 	  },
 	  render: function render() {
+	    var _this = this;
+
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
@@ -82,11 +84,13 @@
 	          _react2['default'].createElement(
 	            _reactBootstrap.DropdownButton,
 	            { eventKey: 1, title: 'Kilpailut' },
-	            _react2['default'].createElement(
-	              _reactBootstrap.MenuItem,
-	              { onSelect: this.onMenuSelect, eventKey: '/amatoorisarja' },
-	              'Amatöörisarja'
-	            )
+	            Object.keys(routesNames).map(function (name) {
+	              return _react2['default'].createElement(
+	                _reactBootstrap.MenuItem,
+	                { onSelect: _this.onMenuSelect, eventKey: '/' + name, key: name },
+	                routesNames[name]
+	              );
+	            })
 	          ),
 	          _react2['default'].createElement(
 	            _reactBootstrap.MenuItem,
@@ -205,20 +209,35 @@
 	  }
 	});
 
-	var Amatoorisarja = _react2['default'].createClass({
-	  displayName: 'Amatoorisarja',
+	var routesNames = {
+	  'amatoorisarja': 'Amatöörisarja',
+	  'junioricup': 'Animagi junioricup'
+	};
 
-	  componentDidMount: function componentDidMount() {
-	    var _this = this;
+	var Series = _react2['default'].createClass({
+	  displayName: 'Series',
 
-	    _axios2['default'].get('/data/amatoorisarja').then(function (resp) {
-	      _this.setState({
+	  update: function update(props) {
+	    var _this2 = this;
+
+	    this.setState({
+	      loading: true,
+	      data: null
+	    });
+	    _axios2['default'].get('/data/' + props.params.path).then(function (resp) {
+	      _this2.setState({
 	        data: resp.data,
 	        loading: false
 	      });
 	    })['catch'](function () {
-	      return _this.setState({ error: true });
+	      return _this2.setState({ error: true });
 	    });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.update(newProps);
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.update(this.props);
 	  },
 	  getInitialState: function getInitialState() {
 	    return {
@@ -226,16 +245,16 @@
 	    };
 	  },
 	  onRowClick: function onRowClick(i) {
-	    var _this2 = this;
+	    var _this3 = this;
 
 	    return function () {
-	      _this2.setState({
-	        activeItem: _this2.state.activeItem === i ? null : i
+	      _this3.setState({
+	        activeItem: _this3.state.activeItem === i ? null : i
 	      });
 	    };
 	  },
 	  render: function render() {
-	    var _this3 = this;
+	    var _this4 = this;
 
 	    if (this.state.error) return _react2['default'].createElement(
 	      _reactBootstrap.Alert,
@@ -253,7 +272,7 @@
 	      _react2['default'].createElement(
 	        'h2',
 	        null,
-	        'Amatöörisarja'
+	        routesNames[this.props.params.path]
 	      ),
 	      _react2['default'].createElement(
 	        _reactBootstrap.Table,
@@ -295,9 +314,9 @@
 	          'tbody',
 	          null,
 	          this.state.data.standings.map(function (one, i) {
-	            return _this3.state.activeItem === i ? _react2['default'].createElement(
+	            return _this4.state.activeItem === i ? _react2['default'].createElement(
 	              'tr',
-	              { key: i, onClick: _this3.onRowClick(i) },
+	              { key: i, onClick: _this4.onRowClick(i) },
 	              _react2['default'].createElement(
 	                'td',
 	                { colSpan: 5 },
@@ -305,7 +324,7 @@
 	              )
 	            ) : _react2['default'].createElement(
 	              'tr',
-	              { key: i, onClick: _this3.onRowClick(i), style: { cursor: 'pointer' } },
+	              { key: i, onClick: _this4.onRowClick(i), style: { cursor: 'pointer' } },
 	              _react2['default'].createElement(
 	                'td',
 	                null,
@@ -385,11 +404,53 @@
 	  }
 	});
 
+	var Front = _react2['default'].createClass({
+	  displayName: 'Front',
+
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      _react2['default'].createElement(
+	        'h2',
+	        null,
+	        'SRL:n sarjakilpailujen tilanne'
+	      ),
+	      _react2['default'].createElement(
+	        'p',
+	        null,
+	        'Epävirallinen ajantasainen listaus sarjakilpailujen pistetilanteista. ',
+	        _react2['default'].createElement(
+	          _reactRouter.Link,
+	          { to: 'tietoja' },
+	          'Lue lisää'
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'ul',
+	        null,
+	        Object.keys(routesNames).map(function (name) {
+	          return _react2['default'].createElement(
+	            'li',
+	            null,
+	            _react2['default'].createElement(
+	              _reactRouter.Link,
+	              { to: 'series', params: { path: name } },
+	              routesNames[name]
+	            )
+	          );
+	        })
+	      )
+	    );
+	  }
+	});
+
 	var routes = _react2['default'].createElement(
 	  _reactRouter.Route,
 	  { handler: App },
-	  _react2['default'].createElement(_reactRouter.Route, { handler: Amatoorisarja, path: '/amatoorisarja' }),
-	  _react2['default'].createElement(_reactRouter.Route, { handler: Tietoja, path: '/tietoja' })
+	  _react2['default'].createElement(_reactRouter.Route, { handler: Front, path: '/' }),
+	  _react2['default'].createElement(_reactRouter.Route, { handler: Tietoja, path: '/tietoja', name: 'tietoja' }),
+	  _react2['default'].createElement(_reactRouter.Route, { handler: Series, path: ':path', name: 'series' })
 	);
 
 	_reactRouter2['default'].run(routes, _reactRouter2['default'].HashLocation, function (Root) {
