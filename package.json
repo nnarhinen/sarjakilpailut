@@ -1,0 +1,40 @@
+{
+  "name": "sarjakilpailut",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node-dev server",
+    "frontend": "webpack --progress --colors --watch"
+  },
+  "author": "Niklas Närhinen",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.5.4",
+    "babel": "^5.5.8",
+    "bookshelf": "^0.8.1",
+    "express": "^4.12.4",
+    "knex": "^0.8.6",
+    "nunjucks": "^1.3.4",
+    "react": "^0.13.3",
+    "react-bootstrap": "^0.23.3",
+    "react-router": "^0.13.3",
+    "sprintf-js": "^1.0.2",
+    "underscore": "^1.8.3"
+  },
+  "jshintConfig": {
+    "node": true,
+    "esnext": true,
+    "strict": true,
+    "browser": true
+  },
+  "devDependencies": {
+    "babel-core": "^5.5.8",
+    "babel-loader": "^5.1.4",
+    "node-dev": "^2.6.2",
+    "node-libs-browser": "^0.5.2",
+    "react-router": "git://github.com/rackt/react-router",
+    "webpack": "^1.9.11"
+  }
+}
