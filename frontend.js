@@ -53,8 +53,8 @@ var Amatoorisarja = React.createClass({
           <tr>
             <th>#</th>
             <th>Ratsastaja</th>
-            <th>Seura</th>
             <th>Hevonen</th>
+            <th>Seura</th>
             <th>Yhteensä</th>
           </tr>
         </thead>

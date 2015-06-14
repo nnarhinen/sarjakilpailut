@@ -157,12 +157,12 @@
 	          _react2['default'].createElement(
 	            'th',
 	            null,
-	            'Seura'
+	            'Hevonen'
 	          ),
 	          _react2['default'].createElement(
 	            'th',
 	            null,
-	            'Hevonen'
+	            'Seura'
 	          ),
 	          _react2['default'].createElement(
 	            'th',
