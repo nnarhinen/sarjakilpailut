@@ -113,6 +113,98 @@
 	  }
 	});
 
+	var ResultDetails = _react2['default'].createClass({
+	  displayName: 'ResultDetails',
+
+	  render: function render() {
+	    var one = this.props.item;
+	    return _react2['default'].createElement(
+	      _reactBootstrap.Well,
+	      { style: { cursor: 'pointer' } },
+	      _react2['default'].createElement(
+	        'h2',
+	        null,
+	        this.props.rank,
+	        '. ',
+	        one.rider_name,
+	        ' ',
+	        _react2['default'].createElement(
+	          'small',
+	          null,
+	          one.horse_name
+	        )
+	      ),
+	      _react2['default'].createElement(
+	        'h3',
+	        null,
+	        one.club_name
+	      ),
+	      _react2['default'].createElement(
+	        _reactBootstrap.Table,
+	        null,
+	        _react2['default'].createElement(
+	          'thead',
+	          null,
+	          _react2['default'].createElement(
+	            'tr',
+	            null,
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Paikka ja aika'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Sijoitus'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Tulos'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Pisteet'
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'tbody',
+	          null,
+	          one.competitions.map(function (comp, i) {
+	            return _react2['default'].createElement(
+	              'tr',
+	              { key: 'c' + i },
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                comp.competition_name
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                comp.rank
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                comp.result_preview
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                comp.points
+	              )
+	            );
+	          })
+	        )
+	      )
+	    );
+	  }
+	});
+
 	var Amatoorisarja = _react2['default'].createClass({
 	  displayName: 'Amatoorisarja',
 
@@ -133,7 +225,18 @@
 	      loading: true
 	    };
 	  },
+	  onRowClick: function onRowClick(i) {
+	    var _this2 = this;
+
+	    return function () {
+	      _this2.setState({
+	        activeItem: _this2.state.activeItem === i ? null : i
+	      });
+	    };
+	  },
 	  render: function render() {
+	    var _this3 = this;
+
 	    if (this.state.error) return _react2['default'].createElement(
 	      _reactBootstrap.Alert,
 	      { bsStyle: 'danger' },
@@ -176,7 +279,7 @@
 	          _react2['default'].createElement(
 	            'th',
 	            null,
-	            'Yhteensä'
+	            'Yhteensä (osakilpailua)'
 	          )
 	        )
 	      ),
@@ -184,9 +287,17 @@
 	        'tbody',
 	        null,
 	        this.state.data.standings.map(function (one, i) {
-	          return _react2['default'].createElement(
+	          return _this3.state.activeItem === i ? _react2['default'].createElement(
 	            'tr',
-	            { key: i },
+	            { key: i, onClick: _this3.onRowClick(i) },
+	            _react2['default'].createElement(
+	              'td',
+	              { colSpan: 5 },
+	              _react2['default'].createElement(ResultDetails, { rank: i + 1, item: one })
+	            )
+	          ) : _react2['default'].createElement(
+	            'tr',
+	            { key: i, onClick: _this3.onRowClick(i), style: { cursor: 'pointer' } },
 	            _react2['default'].createElement(
 	              'td',
 	              null,
@@ -210,7 +321,10 @@
 	            _react2['default'].createElement(
 	              'td',
 	              null,
-	              one.total_points
+	              one.total_points,
+	              ' (',
+	              one.competitions.length,
+	              ')'
 	            )
 	          );
 	        })

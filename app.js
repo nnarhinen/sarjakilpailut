@@ -30,7 +30,7 @@ app.get('/data/amatoorisarja', (req, res, next) => {
         Promise.all(_.keys(competitionIds).map((id) => {
           return axios.get(sprintf('http://online.equipe.com/api/v1/class_sections/%s/results.json', id)).then((res) => {
             return [id, res.data.filter((one) => one.results[0].status !== 'eliminated' && one.rank <= 20)
-                           .map((one) => _.extend(_.pick(one, 'rider_name', 'horse_name', 'club_name'), {points: pointMatrix[one.rank - 1]}))];
+                           .map((one) => _.extend(_.pick(one, 'rider_name', 'horse_name', 'club_name', 'rank', 'result_preview'), {points: pointMatrix[one.rank - 1]}))];
           }); 
         })).then((data) => {
           var ret = _.chain(data)
@@ -41,7 +41,7 @@ app.get('/data/amatoorisarja', (req, res, next) => {
           .map((one) => {
             var results = one[1];
             return _.extend(_.pick(results[0], 'rider_name', 'horse_name', 'club_name'), {total_points: _.last(results.map((one) => one.points).sort(), 6).reduce((memo, one) => memo + one, 0)}, {
-              competitions: results.map((one) => _.pick(one, 'competition_id', 'competition_name', 'points'))
+              competitions: results.map((one) => _.pick(one, 'competition_id', 'competition_name', 'points', 'result_preview', 'rank'))
             });
           })
           .sortBy('total_points')
