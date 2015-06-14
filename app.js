@@ -39,17 +39,30 @@ var competitionSeries = {
       '161948': 'Iisalmi 6.-7.6',
       '163230': 'Ypäjä 9.-14.6'
     }
+  },
+  gp: {
+    competitionIds: {
+      '156166': 'Ypäjä 8.-10.5',
+      '158763': 'Korpikylä 21.-24.5.'
+    },
+    pointMatrix: [20,18,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,1,1],
+    significantCompetitions: 3,
+    oneHorseOnly: true
   }
 };
 
 _.keys(competitionSeries).map((path) => {
-  var {competitionIds, pointMatrix, significantCompetitions} = competitionSeries[path];
+  var {competitionIds, pointMatrix, significantCompetitions, oneHorseOnly} = competitionSeries[path];
   app.get('/data/' + path, (req, res, next) => {
 
     Promise.all(_.keys(competitionIds).map((id) => {
       return axios.get(sprintf('http://online.equipe.com/api/v1/class_sections/%s/results.json', id)).then((res) => {
-        return [id, res.data.filter((one) => one.results[0].status !== 'eliminated' && one.rank <= pointMatrix.length)
-                       .map((one) => _.extend(_.pick(one, 'rider_name', 'horse_name', 'club_name', 'rank', 'result_preview'), {points: pointMatrix[one.rank - 1]}))];
+        var riders = {};
+        return [id, res.data.filter((one) => {
+          if (oneHorseOnly && riders[one.rider_id]) return false;
+          riders[one.rider_id] = true;
+          return one.results[0].status !== 'eliminated' && Object.keys(riders).length <= pointMatrix.length;
+        }).map((one, rank) => _.extend(_.pick(one, 'rider_name', 'horse_name', 'club_name', 'rank', 'result_preview'), {points: pointMatrix[rank]}))];
       }); 
     })).then((data) => {
       var ret = _.chain(data)

@@ -215,7 +215,8 @@
 
 	var routesNames = {
 	  'amatoorisarja': 'Amatöörisarja',
-	  'junioricup': 'Animagi junioricup'
+	  'junioricup': 'Animagi junioricup',
+	  'gp': 'LähiTapiola Grand Prix'
 	};
 
 	var Series = _react2['default'].createClass({

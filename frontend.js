@@ -67,7 +67,8 @@ var ResultDetails = React.createClass({
 
 var routesNames = {
   'amatoorisarja': 'Amatöörisarja',
-  'junioricup': 'Animagi junioricup'
+  'junioricup': 'Animagi junioricup',
+  'gp': 'LähiTapiola Grand Prix'
 };
 
 var Series = React.createClass({
