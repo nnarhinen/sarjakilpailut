@@ -90,30 +90,33 @@ var Amatoorisarja = React.createClass({
     if (this.state.error) return <Alert bsStyle="danger">Tietojen hakeminen epäonnistui</Alert>;
     if (this.state.loading) return <Well>Ladataan tietoja..</Well>;
     return (
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Ratsastaja</th>
-            <th>Hevonen</th>
-            <th>Seura</th>
-            <th>Yhteensä (osakilpailua)</th>
-          </tr>
-        </thead>
-        <tbody>
-          { this.state.data.standings.map((one, i) => {
-            return this.state.activeItem === i ? <tr key={i} onClick={this.onRowClick(i)}><td colSpan={5}><ResultDetails rank={i+1} item={one} /></td></tr> : (
-              <tr key={i} onClick={this.onRowClick(i)} style={{cursor: 'pointer'}}>
-                <td>{i+1}</td>
-                <td>{one.rider_name}</td>
-                <td>{one.horse_name}</td>
-                <td>{one.club_name}</td>
-                <td>{one.total_points} ({one.competitions.length})</td>
-              </tr>
-              );
-          }) }
-        </tbody>
-      </Table>
+      <div>
+        <h2>Amatöörisarja</h2>
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Ratsastaja</th>
+              <th>Hevonen</th>
+              <th>Seura</th>
+              <th>Yhteensä (osakilpailua)</th>
+            </tr>
+          </thead>
+          <tbody>
+            { this.state.data.standings.map((one, i) => {
+              return this.state.activeItem === i ? <tr key={i} onClick={this.onRowClick(i)}><td colSpan={5}><ResultDetails rank={i+1} item={one} /></td></tr> : (
+                <tr key={i} onClick={this.onRowClick(i)} style={{cursor: 'pointer'}}>
+                  <td>{i+1}</td>
+                  <td>{one.rider_name}</td>
+                  <td>{one.horse_name}</td>
+                  <td>{one.club_name}</td>
+                  <td>{one.total_points} ({one.competitions.length})</td>
+                </tr>
+                );
+            }) }
+          </tbody>
+        </Table>
+      </div>
     );
   }
 });

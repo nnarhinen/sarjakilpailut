@@ -248,86 +248,95 @@
 	      'Ladataan tietoja..'
 	    );
 	    return _react2['default'].createElement(
-	      _reactBootstrap.Table,
-	      { responsive: true },
+	      'div',
+	      null,
 	      _react2['default'].createElement(
-	        'thead',
+	        'h2',
 	        null,
-	        _react2['default'].createElement(
-	          'tr',
-	          null,
-	          _react2['default'].createElement(
-	            'th',
-	            null,
-	            '#'
-	          ),
-	          _react2['default'].createElement(
-	            'th',
-	            null,
-	            'Ratsastaja'
-	          ),
-	          _react2['default'].createElement(
-	            'th',
-	            null,
-	            'Hevonen'
-	          ),
-	          _react2['default'].createElement(
-	            'th',
-	            null,
-	            'Seura'
-	          ),
-	          _react2['default'].createElement(
-	            'th',
-	            null,
-	            'Yhteensä (osakilpailua)'
-	          )
-	        )
+	        'Amatöörisarja'
 	      ),
 	      _react2['default'].createElement(
-	        'tbody',
-	        null,
-	        this.state.data.standings.map(function (one, i) {
-	          return _this3.state.activeItem === i ? _react2['default'].createElement(
+	        _reactBootstrap.Table,
+	        { responsive: true },
+	        _react2['default'].createElement(
+	          'thead',
+	          null,
+	          _react2['default'].createElement(
 	            'tr',
-	            { key: i, onClick: _this3.onRowClick(i) },
+	            null,
 	            _react2['default'].createElement(
-	              'td',
-	              { colSpan: 5 },
-	              _react2['default'].createElement(ResultDetails, { rank: i + 1, item: one })
+	              'th',
+	              null,
+	              '#'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Ratsastaja'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Hevonen'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Seura'
+	            ),
+	            _react2['default'].createElement(
+	              'th',
+	              null,
+	              'Yhteensä (osakilpailua)'
 	            )
-	          ) : _react2['default'].createElement(
-	            'tr',
-	            { key: i, onClick: _this3.onRowClick(i), style: { cursor: 'pointer' } },
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              i + 1
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              one.rider_name
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              one.horse_name
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              one.club_name
-	            ),
-	            _react2['default'].createElement(
-	              'td',
-	              null,
-	              one.total_points,
-	              ' (',
-	              one.competitions.length,
-	              ')'
-	            )
-	          );
-	        })
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'tbody',
+	          null,
+	          this.state.data.standings.map(function (one, i) {
+	            return _this3.state.activeItem === i ? _react2['default'].createElement(
+	              'tr',
+	              { key: i, onClick: _this3.onRowClick(i) },
+	              _react2['default'].createElement(
+	                'td',
+	                { colSpan: 5 },
+	                _react2['default'].createElement(ResultDetails, { rank: i + 1, item: one })
+	              )
+	            ) : _react2['default'].createElement(
+	              'tr',
+	              { key: i, onClick: _this3.onRowClick(i), style: { cursor: 'pointer' } },
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                i + 1
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                one.rider_name
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                one.horse_name
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                one.club_name
+	              ),
+	              _react2['default'].createElement(
+	                'td',
+	                null,
+	                one.total_points,
+	                ' (',
+	                one.competitions.length,
+	                ')'
+	              )
+	            );
+	          })
+	        )
 	      )
 	    );
 	  }
