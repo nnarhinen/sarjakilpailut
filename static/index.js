@@ -77,7 +77,11 @@
 	      null,
 	      _react2['default'].createElement(
 	        _reactBootstrap.Navbar,
-	        { brand: 'Sarjakilpailutilanteet', inverse: true, toggleNavKey: 0, staticTop: true },
+	        { brand: _react2['default'].createElement(
+	            _reactRouter.Link,
+	            { to: 'front' },
+	            'Sarjakilpailutilanteet'
+	          ), inverse: true, toggleNavKey: 0, staticTop: true },
 	        _react2['default'].createElement(
 	          _reactBootstrap.Nav,
 	          { right: true, eventKey: 0 },
@@ -448,7 +452,7 @@
 	var routes = _react2['default'].createElement(
 	  _reactRouter.Route,
 	  { handler: App },
-	  _react2['default'].createElement(_reactRouter.Route, { handler: Front, path: '/' }),
+	  _react2['default'].createElement(_reactRouter.Route, { handler: Front, path: '/', name: 'front' }),
 	  _react2['default'].createElement(_reactRouter.Route, { handler: Tietoja, path: '/tietoja', name: 'tietoja' }),
 	  _react2['default'].createElement(_reactRouter.Route, { handler: Series, path: ':path', name: 'series' })
 	);

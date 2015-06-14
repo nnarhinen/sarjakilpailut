@@ -14,7 +14,7 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <Navbar brand='Sarjakilpailutilanteet' inverse toggleNavKey={0} staticTop>
+        <Navbar brand={<Link to="front">Sarjakilpailutilanteet</Link>} inverse toggleNavKey={0} staticTop>
           <Nav right eventKey={0}>
             <DropdownButton eventKey={1} title='Kilpailut'>
               {Object.keys(routesNames).map((name) => <MenuItem onSelect={this.onMenuSelect} eventKey={'/' + name} key={name}>{routesNames[name]}</MenuItem>)}
@@ -167,7 +167,7 @@ var Front = React.createClass({
 
 var routes = (
   <Route handler={App}>
-    <Route handler={Front} path="/" />
+    <Route handler={Front} path="/" name="front" />
     <Route handler={Tietoja} path="/tietoja" name="tietoja"/>
     <Route handler={Series} path=":path" name="series" />
   </Route>
