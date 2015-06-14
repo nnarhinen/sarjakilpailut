@@ -25,6 +25,9 @@ var App = React.createClass({
         <div className="container">
           <RouteHandler />
         </div>
+        <div className="container">
+          <p style={{textAlign: 'center'}}>(c) Niklas Närhinen 2015</p>
+        </div>
       </div>
     );
   }

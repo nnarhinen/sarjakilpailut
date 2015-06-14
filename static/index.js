@@ -99,6 +99,15 @@
 	        'div',
 	        { className: 'container' },
 	        _react2['default'].createElement(_reactRouter.RouteHandler, null)
+	      ),
+	      _react2['default'].createElement(
+	        'div',
+	        { className: 'container' },
+	        _react2['default'].createElement(
+	          'p',
+	          { style: { textAlign: 'center' } },
+	          '(c) Niklas Närhinen 2015'
+	        )
 	      )
 	    );
 	  }
